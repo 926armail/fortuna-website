@@ -3,55 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Компания "Фортуна" - Продажа качественной фанеры</title>
+    <title>ООО Фортуна | Премиальная фанера</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; }
-        header { background-color: #8b5a2b; color: white; padding: 30px 20px; text-align: center; }
-        h1 { margin: 0; font-size: 2.5em; }
-        .container { max-width: 800px; margin: 30px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .hero { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #eee; }
-        .hero h2 { color: #8b5a2b; }
-        .products { margin-top: 30px; }
-        .product-item { background: #fdfbf7; padding: 15px; margin-bottom: 15px; border-left: 5px solid #8b5a2b; border-radius: 4px; }
-        .contacts { margin-top: 30px; background: #e9ecef; padding: 20px; border-radius: 8px; text-align: center; }
-        footer { text-align: center; margin-top: 40px; padding: 20px; color: #777; font-size: 0.9em; }
+        /* Базовые настройки и шрифты */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+        
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+        
+        /* Навигация (верхнее меню) */
+        nav { background: rgba(34, 34, 34, 0.95); position: fixed; width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between; padding: 15px 50px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        nav .logo { color: #f39c12; font-size: 24px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 2px;}
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        nav ul li a:hover { color: #f39c12; }
+        .cart-btn { background: #f39c12; padding: 8px 15px; border-radius: 20px; color: #111 !important; }
+
+        /* Главный экран (Hero) */
+        header { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1505001391217-104990d0b04c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 20px; }
+        header h1 { font-size: 4em; margin-bottom: 10px; animation: fadeInDown 1s ease-out; }
+        header p { font-size: 1.5em; max-width: 800px; margin-bottom: 30px; animation: fadeInUp 1s ease-out; }
+        .cta-btn { background: #f39c12; color: #111; padding: 15px 30px; text-decoration: none; font-size: 1.2em; font-weight: 800; border-radius: 5px; transition: transform 0.3s, background 0.3s; animation: fadeIn 2s; }
+        .cta-btn:hover { transform: scale(1.05); background: #e67e22; }
+
+        /* Разделы */
+        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { text-align: center; font-size: 2.5em; color: #222; margin-bottom: 50px; text-transform: uppercase; }
+        
+        /* Каталог товаров */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s; text-align: center; padding-bottom: 20px; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 4px solid #f39c12; }
+        .card h3 { margin: 15px 0; font-size: 1.5em; }
+        .card p { color: #666; padding: 0 15px; font-size: 0.9em;}
+        .price-tag { font-size: 1.3em; font-weight: 800; color: #d35400; margin: 15px 0; }
+        .add-to-cart { background: #2c3e50; color: white; border: none; padding: 10px 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; transition: background 0.3s; }
+        .add-to-cart:hover { background: #f39c12; color: #111; }
+
+        /* Таблица цен */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #ddd; }
+        th { background: #2c3e50; color: white; }
+        tr:hover { background-color: #f1f2f6; }
+
+        /* Корзина */
+        .cart-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid #f39c12; }
+        #cart-items { list-style: none; padding: 0; }
+        #cart-items li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ccc; font-weight: 600; }
+        .cart-total { text-align: right; font-size: 1.5em; font-weight: 800; margin-top: 20px; color: #d35400; }
+
+        /* Контакты и подвал */
+        .contacts { display: flex; justify-content: space-around; flex-wrap: wrap; background: #2c3e50; color: white; padding: 60px 20px; border-radius: 10px; margin-bottom: 50px;}
+        .contact-box { text-align: center; margin: 10px; }
+        .contact-box h3 { color: #f39c12; }
+        footer { background: #111; color: #888; text-align: center; padding: 20px; }
+
+        /* Анимации */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ООО "Фортуна"</h1>
-        <p>Надежный поставщик фанеры для любых строительных задач</p>
+
+    <!-- Верхнее меню -->
+    <nav>
+        <a href="#home" class="logo">Фортуна</a>
+        <ul>
+            <li><a href="#catalog">Каталог</a></li>
+            <li><a href="#price">Прайс</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+            <li><a href="#cart" class="cart-btn">Корзина (<span id="cart-count">0</span>)</a></li>
+        </ul>
+    </nav>
+
+    <!-- Главный экран -->
+    <header id="home">
+        <h1>Дерево, которому доверяют</h1>
+        <p>Надежный поставщик фанеры. Собственный склад, контроль качества и профессиональные услуги погрузки-разгрузки для вашего бизнеса.</p>
+        <a href="#catalog" class="cta-btn">Выбрать фанеру</a>
     </header>
-    
-    <div class="container">
-        <div class="hero">
-            <h2>Добро пожаловать!</h2>
-            <p>Мы предлагаем высококачественную березовую и хвойную фанеру оптом и в розницу. Гарантия качества, быстрая доставка на объекты и лучшие цены на рынке.</p>
+
+    <!-- Каталог товаров -->
+    <section id="catalog">
+        <h2>Наш ассортимент</h2>
+        <div class="grid">
+            <!-- Товар 1 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1533090368676-1fd25485db88?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Фанера ФК">
+                <h3>Фанера ФК 1525х1525</h3>
+                <p>Идеальна для внутренних работ, укладки пола и производства мебели. Экологичная и прочная.</p>
+                <div class="price-tag">850 руб.</div>
+                <button class="add-to-cart" onclick="addToCart('Фанера ФК 1525х1525', 850)">В корзину</button>
+            </div>
+            <!-- Товар 2 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1610385966601-52382101e4a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Фанера ФСФ">
+                <h3>Фанера ФСФ 1220х2440</h3>
+                <p>Повышенная влагостойкость. Подходит для наружных работ и кровельных настилов.</p>
+                <div class="price-tag">1 200 руб.</div>
+                <button class="add-to-cart" onclick="addToCart('Фанера ФСФ 1220х2440', 1200)">В корзину</button>
+            </div>
+            <!-- Товар 3 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Ламинированная фанера">
+                <h3>Ламинированная (Опалубка)</h3>
+                <p>Незаменима для монолитного строительства и создания многоразовой прочной опалубки.</p>
+                <div class="price-tag">2 500 руб.</div>
+                <button class="add-to-cart" onclick="addToCart('Ламинированная фанера', 2500)">В корзину</button>
+            </div>
         </div>
-        
-        <div class="products">
-            <h3>Наш ассортимент:</h3>
-            <div class="product-item">
-                <strong>Фанера ФК (влагостойкая)</strong><br> Идеальна для внутренней отделки помещений, укладки под ламинат и производства мебели.
-            </div>
-            <div class="product-item">
-                <strong>Фанера ФСФ (повышенной влагостойкости)</strong><br> Отличный выбор для наружных работ, кровельных настилов и возведения перегородок.
-            </div>
-            <div class="product-item">
-                <strong>Ламинированная фанера</strong><br> Незаменима для создания прочной многоразовой опалубки и строительных лесов.
-            </div>
+    </section>
+
+    <!-- Прайс-лист -->
+    <section id="price">
+        <h2>Оптовый Прайс-лист</h2>
+        <table>
+            <tr>
+                <th>Наименование товара</th>
+                <th>Розничная цена (до 50 шт)</th>
+                <th>Оптовая цена (от 50 шт)</th>
+                <th>Наличие на складе</th>
+            </tr>
+            <tr>
+                <td>Фанера ФК (Сорт 2/3) 10мм</td>
+                <td>850 руб.</td>
+                <td>790 руб.</td>
+                <td>В наличии</td>
+            </tr>
+            <tr>
+                <td>Фанера ФСФ (Сорт 3/3) 15мм</td>
+                <td>1 200 руб.</td>
+                <td>1 050 руб.</td>
+                <td>В наличии</td>
+            </tr>
+            <tr>
+                <td>Ламинированная 18мм (Свеза)</td>
+                <td>2 500 руб.</td>
+                <td>2 300 руб.</td>
+                <td>Под заказ (2 дня)</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Блок Корзины -->
+    <section id="cart">
+        <h2>Ваш заказ</h2>
+        <div class="cart-container">
+            <ul id="cart-items">
+                <li style="color: #888;">Корзина пока пуста. Добавьте товары из каталога.</li>
+            </ul>
+            <div class="cart-total">Итого: <span id="total-price">0</span> руб.</div>
+            <br>
+            <button class="cta-btn" style="width: 100%; border:none; cursor:pointer;" onclick="checkout()">Оформить заявку</button>
         </div>
-        
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts">
         <div class="contacts">
-            <h3>Свяжитесь с нами:</h3>
-            <p>📞 Телефон: +7 (999) 123-45-67</p>
-            <p>✉️ Email: info@fortuna-fanera.ru</p>
-            <p>📍 Адрес: г. Москва, ул. Рязанский проспект, д. 10</p>
+            <div class="contact-box">
+                <h3>📍 Наш адрес</h3>
+                <p>г. Москва, ул. Рязанский проспект</p>
+                <p>Складской комплекс №4</p>
+            </div>
+            <div class="contact-box">
+                <h3>📞 Телефоны</h3>
+                <p>+7 (495) 123-45-67</p>
+                <p>Пн-Пт: 09:00 - 18:00</p>
+            </div>
+            <div class="contact-box">
+                <h3>✉️ Почта</h3>
+                <p>sales@fortuna-plywood.ru</p>
+                <p>Для коммерческих договоров</p>
+            </div>
         </div>
-    </div>
-    
+    </section>
+
     <footer>
-        &copy; 2026 Компания "Фортуна". Все права защищены.
+        &copy; 2026 ООО "Фортуна". Демонстрационный Landing Page.
     </footer>
+
+    <!-- Скрипт для работы корзины -->
+    <script>
+        let cartItems = [];
+        let total = 0;
+
+        function addToCart(name, price) {
+            cartItems.push({name: name, price: price});
+            total += price;
+            updateCart();
+            // Небольшая анимация кнопки навигации
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cartItems.length;
+            document.getElementById('total-price').innerText = total;
+            
+            let cartList = document.getElementById('cart-items');
+            cartList.innerHTML = ''; // Очищаем список
+            
+            cartItems.forEach((item, index) => {
+                cartList.innerHTML += `<li><span>${index + 1}. ${item.name}</span> <span>${item.price} руб.</span></li>`;
+            });
+        }
+
+        function checkout() {
+            if(cartItems.length === 0) {
+                alert("Сначала добавьте товары в корзину!");
+            } else {
+                alert("Спасибо за заказ! Это тестовая версия сайта. Ваш заказ на сумму " + total + " руб. принят в обработку.");
+                // Очистка корзины после "покупки"
+                cartItems = [];
+                total = 0;
+                updateCart();
+                document.getElementById('cart-items').innerHTML = '<li style="color: #888;">Корзина пока пуста. Добавьте товары из каталога.</li>';
+            }
+        }
+    </script>
 </body>
 </html>
